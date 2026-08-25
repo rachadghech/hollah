@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #28161D;
+  
+  /* Brand color tokens */
+  --brand-burgundy: #28161D;
+  --brand-wine: #7E2A4C;
+  --brand-wine-hover: #631E3B;
+  --brand-gold: #7E2A4C;
+  --brand-gold-dark: #631E3B;
+  --brand-gold-light: #FAF2F5;
+  --brand-cream: #FAF9F6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --font-arabic: var(--font-arabic);
+  
+  /* Map Tailwind class colors to brand variables */
+  --color-burgundy: var(--brand-burgundy);
+  --color-wine: var(--brand-wine);
+  --color-wine-hover: var(--brand-wine-hover);
+  --color-gold: var(--brand-gold);
+  --color-gold-dark: var(--brand-gold-dark);
+  --color-gold-light: var(--brand-gold-light);
+  --color-cream: var(--brand-cream);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Language switching transition overlay */
+.switching-lang-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-in-out, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.015);
+  z-index: 9999;
+}
+
+body.switching-lang .switching-lang-overlay {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(0.98); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 1.5s ease-in-out infinite;
+}
+
+/* Custom transitions and scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--brand-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brand-gold);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-gold-dark);
+}
+
+/* Base custom classes */
+.font-serif-brand {
+  font-family: var(--font-serif), serif;
+}
+
+/* Arabic / RTL overrides */
+[dir="rtl"] .font-serif-brand {
+  font-family: var(--font-arabic), var(--font-serif), serif;
+}
+
+[dir="rtl"] body {
+  font-family: var(--font-arabic), var(--font-sans), sans-serif;
+}
+
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* ===== Frosted Glass Button (Heavy Textured / Rough Ice) ===== */
+.btn-frosted-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  
+  color: #fff;
+  transition: all 0.3s ease;
+  /* Base glass background */
+
+}
+
+.btn-frosted-glass:hover {
+
+  transform: scale(1.05);
+}
+
+.btn-frosted-glass:active {
+  transform: scale(0.98);
+}
+
+/* Custom UI Shapes */
+.shape-concave {
+  /* This SVG mask creates a rectangle with inward-curving left and right edges (concave pill) */
+  mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 100 100' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L100,0 Q92,50 100,100 L0,100 Q8,50 0,0 Z' fill='black' /%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 100 100' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L100,0 Q92,50 100,100 L0,100 Q8,50 0,0 Z' fill='black' /%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+
+.shape-ogee-arch {
+  mask-image: url('/assets/card-mask.svg');
+  -webkit-mask-image: url('/assets/card-mask.svg');
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}

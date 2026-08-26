@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useRef, useState } from "react";
 import { useLanguage } from "../../LanguageContext";
 import ProductGallery from "./ProductGallery";
 import ProductInfo from "./ProductInfo";
@@ -13,7 +13,7 @@ import Navbar from "../../../components/Navbar";
 import { getProduct, Product, ColorVariant } from "../../productsData";
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { t, language, setLanguage } = useLanguage();
+  const { t, language } = useLanguage();
   const dir = language === "ar" ? "rtl" : "ltr";
   const { id } = use(params);
 
@@ -22,6 +22,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [cart, setCart] = useState<Array<{ product: Product; selectedColor: ColorVariant; quantity: number }>>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState(product?.colors[0]?.name ?? "White");
+
+  // Ref for the order form — used by the "Buy Now" bottom bar to scroll to it
+  const orderFormRef = useRef<HTMLDivElement>(null);
+
+  const scrollToForm = () => {
+    orderFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const triggerToast = (message: string) => {
     setToastMessage(message);
@@ -34,7 +41,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
     <div className={`min-h-screen bg-[var(--brand-cream)] font-sans flex flex-col ${dir === 'rtl' ? 'font-arabic' : ''}`} dir={dir}>
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-6 bg-burgundy text-white px-5 py-3 rounded-xl shadow-2xl z-[999] flex items-center gap-3 animate-bounce border border-gold/20">
+        <div className="fixed bottom-20 left-6 bg-burgundy text-white px-5 py-3 rounded-xl shadow-2xl z-[999] flex items-center gap-3 animate-bounce border border-gold/20">
           <div className="w-2 h-2 rounded-full bg-gold animate-ping"></div>
           <span className="font-sans text-sm font-medium tracking-wide">{toastMessage}</span>
         </div>
@@ -43,8 +50,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       {/* ================= HEADER / NAVBAR ================= */}
       <Navbar cart={cart} setCart={setCart} triggerToast={triggerToast} />
 
-      {/* Main Content */}
-      <main className="flex-1 px-4 md:px-8 max-w-5xl mx-auto w-full pb-12 relative">
+      {/* Main Content — extra bottom padding to clear the fixed Buy Now bar */}
+      <main className="flex-1 px-4 md:px-8 max-w-5xl mx-auto w-full pb-24 relative">
         {!product ? (
           <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-center">
             <h1 className="text-2xl font-serif-brand text-[var(--brand-wine)]">{t('product.notFound')}</h1>
@@ -54,17 +61,24 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           </div>
         ) : (
           <>
+            {/*
+              Layout:
+              - Mobile  → Gallery first (order-1), then Info + Form below (order-2)
+              - Desktop → Form+Info first / left column (md:order-1), Gallery right (md:order-2)
+            */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-              {/* Left Column: Gallery */}
-              <div>
-                <ProductGallery key={`${product.id}-${selectedColor}`} product={product} selectedColor={selectedColor} />
-              </div>
 
-              {/* Right Column: Info & Form */}
-              <div className="flex flex-col gap-6 pt-4">
+              {/* Desktop LEFT / Mobile SECOND: Info + Form */}
+              <div ref={orderFormRef} className="flex flex-col gap-6 pt-4 order-2 md:order-1">
                 <ProductInfo product={product} onColorChange={setSelectedColor} />
                 <OrderForm />
               </div>
+
+              {/* Desktop RIGHT / Mobile FIRST: Gallery */}
+              <div className="order-1 md:order-2">
+                <ProductGallery key={`${product.id}-${selectedColor}`} product={product} selectedColor={selectedColor} />
+              </div>
+
             </div>
 
             {/* Related Products */}
@@ -72,11 +86,40 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <RelatedProducts currentId={product.id} />
             </div>
 
-            {/* Floating Actions */}
+            {/* Floating Actions (side buttons) */}
             <FloatingActions triggerToast={triggerToast} />
           </>
         )}
       </main>
+
+      {/* ═══════════ FIXED BUY NOW BOTTOM BAR ═══════════ */}
+      {product && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-[var(--brand-burgundy)]/20 shadow-[0_-4px_24px_rgba(126,42,76,0.15)] px-4 py-3 flex items-center justify-between gap-4">
+          {/* Price summary */}
+          <div className="flex flex-col leading-tight min-w-fit">
+            <span className="text-lg font-bold text-[var(--brand-wine)]">{product.price}</span>
+            {product.originalPrice && (
+              <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
+            )}
+          </div>
+
+          {/* Buy Now button — scrolls to the order form */}
+          <button
+            onClick={scrollToForm}
+            className="flex-1 max-w-xs flex items-center justify-center text-white font-serif-brand text-lg md:text-xl transition-opacity hover:opacity-90 active:scale-95"
+            style={{
+              backgroundImage: "url('/svgs/Group.svg')",
+              backgroundSize: "100% 100%",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              paddingTop: "12px",
+              paddingBottom: "12px",
+            }}
+          >
+            {t('product.buy')}
+          </button>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 py-12 mt-auto">
@@ -100,7 +143,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                  <span>www.yoursiteurl.com</span>
               </div>
            </div>
-           
+
            {/* Social Links */}
            <div className="flex items-center justify-center gap-6 text-sm font-medium border-t border-[var(--brand-burgundy)] pt-6 w-full max-w-2xl">
               <Link href="#" className="flex items-center gap-2 hover:text-[var(--brand-wine)]">

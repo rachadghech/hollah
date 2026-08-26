@@ -34,8 +34,8 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      dir="ltr"
+      lang="ar"
+      dir="rtl"
       className={`${saphile.variable} ${montserrat.variable} ${cairo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-[#28161D]">

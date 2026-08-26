@@ -70,9 +70,9 @@ const twoPiecesBlack = [
 export const PRODUCTS: Product[] = [
   {
     id: 1,
-    name: "3 Pieces Crystal Beaded Cape Overlay Set",
-    price: "23,900 DZD",
-    originalPrice: "29,900 DZD",
+    name: "عباية فلة ( 3 pieces )",
+    price: "14,500 DA",
+    originalPrice: "19,500 DA",
     rating: 5,
     reviews: 269,
     descriptionKey: "product.desc.threePieces",
@@ -84,9 +84,9 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 2,
-    name: "2 Pieces Elegant Set",
-    price: "18,600 DZD",
-    originalPrice: "23,900 DZD",
+    name: "عباية فلة ( 2 pieces )",
+    price: "5,900 DA",
+    originalPrice: "8,500 DA",
     rating: 5,
     reviews: 145,
     descriptionKey: "product.desc.twoPieces",

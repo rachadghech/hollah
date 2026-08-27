@@ -226,7 +226,7 @@ export const translations: Record<string, Record<Language, string>> = {
 
   // Product Page
   "product.fillInformation": { en: "Fill in the information to place the order", ar: "أدخل المعلومات اللازمة لإتمام طلبك", fr: "Remplissez les informations pour passer la commande" },
-  "product.name": { en: "Name", ar: "الإسم", fr: "Nom" },
+  "product.name": { en: "Full Name", ar: "الاسم الكامل", fr: "Nom complet" },
   "product.phone": { en: "Phone Number", ar: "رقم الهاتف", fr: "Numéro de téléphone" },
   "product.wilaya": { en: "Wilaya", ar: "الولاية", fr: "Wilaya" },
   "product.commune": { en: "Commune", ar: "البلدية", fr: "Commune" },
@@ -270,6 +270,16 @@ export const translations: Record<string, Record<Language, string>> = {
   "product.quantity": { en: "Quantity", ar: "الكمية", fr: "Quantité" },
   "product.total": { en: "Total", ar: "المجموع", fr: "Total" },
   "order.errorRequired": { en: "Please fill in all fields (Name, Phone, Wilaya, Commune)", ar: "يرجى ملء جميع الحقول المطلوبة (الاسم، رقم الهاتف، الولاية، البلدية)", fr: "Veuillez remplir tous les champs (Nom, Téléphone, Wilaya, Commune)" },
+  "order.phoneHint": { 
+    en: "Must be 10 digits starting with 05, 06, or 07 (e.g. 0655123456)", 
+    ar: "يجب أن يتكون من 10 أرقام ويبدأ بـ 05 أو 06 أو 07 (مثال: 0655123456)", 
+    fr: "Doit comporter 10 chiffres commençant par 05, 06 ou 07 (ex: 0655123456)" 
+  },
+  "order.errorPhone": { 
+    en: "Invalid phone number! It must start with 05, 06, or 07 and be exactly 10 digits (e.g. 0655123456)", 
+    ar: "رقم الهاتف غير صحيح! يجب أن يبدأ بـ 05 أو 06 أو 07 ويتكون من 10 أرقام تماماً (مثال: 0655123456)", 
+    fr: "Numéro de téléphone incorrect ! Il doit commencer par 05, 06 ou 07 et comporter exactement 10 chiffres (ex: 0655123456)" 
+  },
   "order.submitting": { en: "Placing order...", ar: "جارٍ تأكيد الطلب...", fr: "Enregistrement de la commande..." },
 
   // Thank You Page

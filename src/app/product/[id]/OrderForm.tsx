@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "../../LanguageContext";
-import { User, Phone, MapPin, Map, Plus, Minus, Loader2, AlertCircle } from "lucide-react";
+import { User, Phone, MapPin, Map, Plus, Minus, Loader2, AlertCircle, Info } from "lucide-react";
 import { Product } from "../../productsData";
 import { WILAYAS } from "@/lib/wilayas";
 import * as fpixel from "@/lib/fpixel";
@@ -21,11 +21,23 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
 
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [phoneTouched, setPhoneTouched] = useState(false);
   const [wilaya, setWilaya] = useState("");
   const [commune, setCommune] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Phone validation: must start with 05, 06, or 07 and be exactly 10 digits
+  const isPhoneValid = (num: string) => /^(05|06|07)\d{8}$/.test(num);
+  const isPhoneIncomplete = phone.length > 0 && !isPhoneValid(phone);
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Only allow numeric digits and maximum 10 digits
+    const cleaned = e.target.value.replace(/\D/g, "").slice(0, 10);
+    setPhone(cleaned);
+    if (errorMessage) setErrorMessage(null);
+  };
 
   // Extract numeric price (e.g. "5,900 DA" -> 5900)
   const basePriceNum = parseInt(product.price.replace(/[^\d]/g, ""), 10) || 0;
@@ -35,10 +47,17 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+    setPhoneTouched(true);
 
-    // Validation
+    // 1. Required fields check
     if (!fullName.trim() || !phone.trim() || !wilaya.trim()) {
       setErrorMessage(t("order.errorRequired"));
+      return;
+    }
+
+    // 2. Strict Phone Validation (starts with 05, 06, 07 and exactly 10 digits)
+    if (!isPhoneValid(phone)) {
+      setErrorMessage(t("order.errorPhone"));
       return;
     }
 
@@ -65,7 +84,7 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
     };
 
     try {
-      // 1. Try sending to backend API
+      // 1. Send to backend API
       try {
         await api.post("/api/orders", {
           fullName: fullName.trim(),
@@ -109,7 +128,6 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
       router.push("/thank-you");
     } catch (err) {
       console.error("Order submission error:", err);
-      // Even on unexpected error, proceed with local fallback
       localStorage.setItem("lastOrder", JSON.stringify(orderPayload));
       router.push("/thank-you");
     } finally {
@@ -124,9 +142,9 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
       </h2>
 
       {errorMessage && (
-        <div className="flex items-center gap-2 p-3.5 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl animate-shake">
-          <AlertCircle className="w-5 h-5 shrink-0 text-red-500" />
-          <span>{errorMessage}</span>
+        <div className="flex items-start gap-2.5 p-3.5 bg-red-50 border border-red-200 text-red-700 text-sm rounded-2xl animate-shake">
+          <AlertCircle className="w-5 h-5 shrink-0 text-red-500 mt-0.5" />
+          <span className="leading-snug">{errorMessage}</span>
         </div>
       )}
 
@@ -145,32 +163,56 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
           <input
             type="text"
             required
+            dir={language === "ar" ? "rtl" : "ltr"}
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder={t("product.name")}
-            className="bg-transparent flex-1 outline-none text-gray-800 placeholder-gray-500 font-medium"
+            className="bg-transparent flex-1 outline-none text-gray-800 placeholder-gray-500 font-medium text-start"
           />
         </div>
 
-        {/* Phone Field */}
-        <div
-          className="h-14 w-full flex items-center px-6 gap-3 bg-transparent border border-gray-200 rounded-2xl md:border-transparent md:rounded-none"
-          style={{
-            backgroundImage: "url('/svgs/Group-1.svg')",
-            backgroundSize: "100% 100%",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        >
-          <Phone className="w-5 h-5 text-[var(--brand-wine)] shrink-0" />
-          <input
-            type="tel"
-            required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder={t("product.phone")}
-            className="bg-transparent flex-1 outline-none text-gray-800 placeholder-gray-500 font-medium"
-          />
+        {/* Phone Field Section */}
+        <div className="flex flex-col gap-1.5">
+          <div
+            className={`h-14 w-full flex items-center px-6 gap-3 bg-transparent border rounded-2xl md:rounded-none transition-colors ${
+              phoneTouched && isPhoneIncomplete
+                ? "border-red-400 bg-red-50/20"
+                : "border-gray-200 md:border-transparent"
+            }`}
+            style={{
+              backgroundImage: "url('/svgs/Group-1.svg')",
+              backgroundSize: "100% 100%",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            }}
+          >
+            <Phone className={`w-5 h-5 shrink-0 ${phoneTouched && isPhoneIncomplete ? "text-red-500" : "text-[var(--brand-wine)]"}`} />
+            <input
+              type="tel"
+              required
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={10}
+              dir={language === "ar" ? "rtl" : "ltr"}
+              value={phone}
+              onChange={handlePhoneChange}
+              onBlur={() => setPhoneTouched(true)}
+              placeholder={t("product.phone")}
+              className="bg-transparent flex-1 outline-none text-gray-800 placeholder-gray-500 font-medium text-start [direction:inherit]"
+            />
+            {/* Length indicator badge */}
+            <span className={`text-xs px-2 py-0.5 rounded-md font-mono ${phone.length === 10 && isPhoneValid(phone) ? "bg-emerald-100 text-emerald-700 font-bold" : "bg-gray-100 text-gray-500"}`}>
+              {phone.length}/10
+            </span>
+          </div>
+
+          {/* Condition note / helper */}
+          <div className={`flex items-center gap-1.5 px-3 text-xs leading-tight transition-colors ${
+            phoneTouched && isPhoneIncomplete ? "text-red-600 font-medium" : "text-gray-500"
+          }`}>
+            <Info className="w-3.5 h-3.5 shrink-0" />
+            <span>{t("order.phoneHint")}</span>
+          </div>
         </div>
 
         {/* Wilaya Field (Dropdown with 58 Wilayas) */}
@@ -186,9 +228,10 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
           <MapPin className="w-5 h-5 text-[var(--brand-wine)] shrink-0" />
           <select
             required
+            dir={language === "ar" ? "rtl" : "ltr"}
             value={wilaya}
             onChange={(e) => setWilaya(e.target.value)}
-            className="bg-transparent flex-1 outline-none text-gray-800 font-medium cursor-pointer"
+            className="bg-transparent flex-1 outline-none text-gray-800 font-medium cursor-pointer text-start"
           >
             <option value="" disabled className="text-gray-500">
               {t("product.wilaya")}
@@ -215,10 +258,11 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
           <input
             type="text"
             required
+            dir={language === "ar" ? "rtl" : "ltr"}
             value={commune}
             onChange={(e) => setCommune(e.target.value)}
             placeholder={t("product.commune")}
-            className="bg-transparent flex-1 outline-none text-gray-800 placeholder-gray-500 font-medium"
+            className="bg-transparent flex-1 outline-none text-gray-800 placeholder-gray-500 font-medium text-start"
           />
         </div>
 

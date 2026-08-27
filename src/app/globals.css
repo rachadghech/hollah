@@ -97,6 +97,20 @@ body.switching-lang .switching-lang-overlay {
   font-family: var(--font-arabic), var(--font-sans), sans-serif;
 }
 
+[dir="rtl"] input,
+[dir="rtl"] select,
+[dir="rtl"] textarea {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="ltr"] input,
+[dir="ltr"] select,
+[dir="ltr"] textarea {
+  text-align: left;
+  direction: ltr;
+}
+
 [dir="rtl"] .rtl-flip {
   transform: scaleX(-1);
 }

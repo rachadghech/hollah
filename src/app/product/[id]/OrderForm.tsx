@@ -8,7 +8,7 @@ export default function OrderForm() {
   const { t } = useLanguage();
 
   return (
-    <div className="mt-8 flex flex-col gap-6">
+    <div className="mt-4 md:mt-0 flex flex-col gap-6">
       <h2 className="text-2xl md:text-3xl font-serif-brand text-[var(--brand-wine)] text-center mb-2">
         {t('product.fillInformation')}
       </h2>

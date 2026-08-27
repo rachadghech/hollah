@@ -69,9 +69,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
 
               {/* Desktop LEFT / Mobile SECOND: Info + Form */}
-              <div ref={orderFormRef} className="flex flex-col gap-6 pt-4 order-2 md:order-1">
-                <ProductInfo product={product} onColorChange={setSelectedColor} />
-                <OrderForm />
+              <div className="flex flex-col gap-6 pt-4 order-2 md:order-1">
+                {/* On desktop: OrderForm is at the very top (md:order-1) before title & description. On mobile: it is below info (order-2) */}
+                <div ref={orderFormRef} className="order-2 md:order-1">
+                  <OrderForm />
+                </div>
+                <div className="order-1 md:order-2">
+                  <ProductInfo product={product} onColorChange={setSelectedColor} />
+                </div>
               </div>
 
               {/* Desktop RIGHT / Mobile FIRST: Gallery */}
@@ -94,30 +99,32 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
       {/* ═══════════ FIXED BUY NOW BOTTOM BAR ═══════════ */}
       {product && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-[var(--brand-burgundy)]/20 shadow-[0_-4px_24px_rgba(126,42,76,0.15)] px-4 py-3 flex items-center justify-between gap-4">
-          {/* Price summary */}
-          <div className="flex flex-col leading-tight min-w-fit">
-            <span className="text-lg font-bold text-[var(--brand-wine)]">{product.price}</span>
-            {product.originalPrice && (
-              <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
-            )}
-          </div>
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-[var(--brand-burgundy)]/20 shadow-[0_-4px_24px_rgba(126,42,76,0.15)] px-4 py-3">
+          <div className="max-w-2xl mx-auto w-full flex items-center justify-between md:justify-center md:gap-8 gap-4">
+            {/* Price summary */}
+            <div className="flex flex-col md:flex-row md:items-center md:gap-3 leading-tight min-w-fit">
+              <span className="text-lg md:text-xl font-bold text-[var(--brand-wine)]">{product.price}</span>
+              {product.originalPrice && (
+                <span className="text-sm md:text-base text-gray-400 line-through">{product.originalPrice}</span>
+              )}
+            </div>
 
-          {/* Buy Now button — scrolls to the order form */}
-          <button
-            onClick={scrollToForm}
-            className="flex-1 max-w-xs flex items-center justify-center text-white font-serif-brand text-lg md:text-xl transition-opacity hover:opacity-90 active:scale-95"
-            style={{
-              backgroundImage: "url('/svgs/Group.svg')",
-              backgroundSize: "100% 100%",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              paddingTop: "12px",
-              paddingBottom: "12px",
-            }}
-          >
-            {t('product.buy')}
-          </button>
+            {/* Buy Now button — scrolls to the order form */}
+            <button
+              onClick={scrollToForm}
+              className="flex-1 max-w-xs md:max-w-sm flex items-center justify-center text-white font-serif-brand text-lg md:text-xl transition-opacity hover:opacity-90 active:scale-95 cursor-pointer"
+              style={{
+                backgroundImage: "url('/svgs/Group.svg')",
+                backgroundSize: "100% 100%",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                paddingTop: "12px",
+                paddingBottom: "12px",
+              }}
+            >
+              {t('product.buy')}
+            </button>
+          </div>
         </div>
       )}
 

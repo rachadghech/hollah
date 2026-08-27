@@ -70,9 +70,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
 
               {/* Desktop LEFT / Mobile SECOND: Info + Form */}
-              <div className="flex flex-col gap-6 pt-4 order-2 md:order-1">
+              <div className="flex flex-col gap-6 pt-4 order-2 md:order-1 ">
                 {/* On desktop: OrderForm is at the very top (md:order-1) before title & description. On mobile: it is below info (order-2) */}
-                <div ref={orderFormRef} className="order-2 md:order-1">
+                <div ref={orderFormRef} className="order-2 md:order-1 pt-20">
                   <OrderForm product={product} selectedColor={selectedColor} selectedSize={selectedSize} />
                 </div>
                 <div className="order-1 md:order-2">

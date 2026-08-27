@@ -230,7 +230,7 @@ export const translations: Record<string, Record<Language, string>> = {
   "product.phone": { en: "Phone Number", ar: "رقم الهاتف", fr: "Numéro de téléphone" },
   "product.wilaya": { en: "Wilaya", ar: "الولاية", fr: "Wilaya" },
   "product.commune": { en: "Commune", ar: "البلدية", fr: "Commune" },
-  "product.buy": { en: "Buy Now", ar: "اشتر الآن", fr: "Acheter maintenant" },
+  "product.buy": { en: "Buy Now", ar: "اشتري الان", fr: "Acheter maintenant" },
   "product.addToCartBtn": { en: "Add to Cart", ar: "أضف للسلة", fr: "Ajouter au panier" },
   "product.youMayAlsoLike": { en: "You may also like", ar: "قد يعجبك أيضاً", fr: "Vous aimerez peut-être aussi" },
   "product.color": { en: "Color", ar: "اللون", fr: "Couleur" },

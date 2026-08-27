@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "build:clean": "rimraf .next && next build",
+    "build": "next build && node scripts/copy-standalone.js",
+    "build:clean": "npx rimraf .next && next build && node scripts/copy-standalone.js",
     "start": "next start -p 3000",
     "start:prod": "node .next/standalone/server.js",
     "lint": "eslint"

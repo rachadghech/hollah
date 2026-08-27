@@ -9,17 +9,34 @@ const sizes = ["S", "M", "L", "XL"];
 
 interface ProductInfoProps {
   product: Product;
+  selectedColor?: string;
   onColorChange?: (color: string) => void;
+  selectedSize?: string;
+  onSizeChange?: (size: string) => void;
 }
 
-export default function ProductInfo({ product, onColorChange }: ProductInfoProps) {
+export default function ProductInfo({ 
+  product, 
+  selectedColor: propColor,
+  onColorChange,
+  selectedSize: propSize,
+  onSizeChange 
+}: ProductInfoProps) {
   const { t } = useLanguage();
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name ?? "White");
-  const [selectedSize, setSelectedSize] = useState("S");
+  const [internalColor, setInternalColor] = useState(product.colors[0]?.name ?? "White");
+  const [internalSize, setInternalSize] = useState("S");
+
+  const selectedColor = propColor ?? internalColor;
+  const selectedSize = propSize ?? internalSize;
 
   const handleColorSelect = (colorName: string) => {
-    setSelectedColor(colorName);
+    setInternalColor(colorName);
     onColorChange?.(colorName);
+  };
+
+  const handleSizeSelect = (size: string) => {
+    setInternalSize(size);
+    onSizeChange?.(size);
   };
 
   return (
@@ -108,7 +125,7 @@ export default function ProductInfo({ product, onColorChange }: ProductInfoProps
             {sizes.map((size) => (
               <button
                 key={size}
-                onClick={() => setSelectedSize(size)}
+                onClick={() => handleSizeSelect(size)}
                 className={`w-12 h-14 flex items-center justify-center text-lg font-medium transition-all
                   ${selectedSize === size
                     ? 'text-[var(--brand-wine)]'

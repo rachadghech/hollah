@@ -266,5 +266,36 @@ export const translations: Record<string, Record<Language, string>> = {
   "color.blossomPink": { en: "Blossom Pink", ar: "وردي زهر", fr: "Rose fleur" },
   "color.gildedGold": { en: "Gilded Gold", ar: "ذهبي مذهب", fr: "Or doré" },
   "color.softLavender": { en: "Soft Lavender", ar: "خزامى ناعم", fr: "Lavande douce" },
-  "product.collection": { en: "FULLA'S COLLECTION", ar: "مجموعة فلة", fr: "COLLECTION FULLA" }
+  "product.collection": { en: "FULLA'S COLLECTION", ar: "مجموعة فلة", fr: "COLLECTION FULLA" },
+  "product.quantity": { en: "Quantity", ar: "الكمية", fr: "Quantité" },
+  "product.total": { en: "Total", ar: "المجموع", fr: "Total" },
+  "order.errorRequired": { en: "Please fill in all fields (Name, Phone, Wilaya, Commune)", ar: "يرجى ملء جميع الحقول المطلوبة (الاسم، رقم الهاتف، الولاية، البلدية)", fr: "Veuillez remplir tous les champs (Nom, Téléphone, Wilaya, Commune)" },
+  "order.submitting": { en: "Placing order...", ar: "جارٍ تأكيد الطلب...", fr: "Enregistrement de la commande..." },
+
+  // Thank You Page
+  "thankyou.badge": { en: "Order Confirmed", ar: "تم تأكيد طلبك بنجاح", fr: "Commande confirmée" },
+  "thankyou.title": { en: "Thank You For Your Order!", ar: "شكراً لثقتك بنا!", fr: "Merci pour votre commande !" },
+  "thankyou.subtitle": {
+    en: "Your order has been received successfully. Our customer support team will contact you by phone to confirm your delivery details.",
+    ar: "تم استلام طلبك بنجاح. سيتصل بك فريق خدمة العملاء هاتفياً لتأكيد تفاصيل وموعد التوصيل.",
+    fr: "Votre commande a été reçue avec succès. Notre service client vous contactera par téléphone pour confirmer les détails de livraison."
+  },
+  "thankyou.orderSummary": { en: "Order Summary", ar: "ملخص الطلب", fr: "Résumé de la commande" },
+  "thankyou.orderNumber": { en: "Order Reference", ar: "رقم الطلب", fr: "Référence commande" },
+  "thankyou.product": { en: "Product", ar: "المنتج", fr: "Produit" },
+  "thankyou.details": { en: "Options", ar: "المواصفات", fr: "Options" },
+  "thankyou.customerInfo": { en: "Delivery Information", ar: "معلومات التوصيل", fr: "Informations de livraison" },
+  "thankyou.fullName": { en: "Full Name", ar: "الاسم الكامل", fr: "Nom complet" },
+  "thankyou.phone": { en: "Phone", ar: "الهاتف", fr: "Téléphone" },
+  "thankyou.location": { en: "Address", ar: "العنوان", fr: "Adresse" },
+  "thankyou.paymentMethod": { en: "Payment Method", ar: "طريقة الدفع", fr: "Mode de paiement" },
+  "thankyou.cod": { en: "Cash on delivery (Pay when you receive)", ar: "الدفع عند الاستلام (الدفع بعد فحص المنتج)", fr: "Paiement à la livraison (à la réception)" },
+  "thankyou.guarantee": {
+    en: "100% Quality & Authenticity Guaranteed",
+    ar: "ضمان الجودة والأصالة بنسبة 100%",
+    fr: "Garantie 100% Qualité et Authenticité"
+  },
+  "thankyou.backToHome": { en: "Return to Home", ar: "العودة إلى الصفحة الرئيسية", fr: "Retour à l'accueil" },
+  "thankyou.whatsapp": { en: "Chat on WhatsApp", ar: "تواصل عبر واتساب", fr: "Contacter sur WhatsApp" }
 };
+

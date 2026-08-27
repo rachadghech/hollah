@@ -22,6 +22,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [cart, setCart] = useState<Array<{ product: Product; selectedColor: ColorVariant; quantity: number }>>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState(product?.colors[0]?.name ?? "White");
+  const [selectedSize, setSelectedSize] = useState("S");
 
   // Ref for the order form — used by the "Buy Now" bottom bar to scroll to it
   const orderFormRef = useRef<HTMLDivElement>(null);
@@ -72,10 +73,16 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <div className="flex flex-col gap-6 pt-4 order-2 md:order-1">
                 {/* On desktop: OrderForm is at the very top (md:order-1) before title & description. On mobile: it is below info (order-2) */}
                 <div ref={orderFormRef} className="order-2 md:order-1">
-                  <OrderForm />
+                  <OrderForm product={product} selectedColor={selectedColor} selectedSize={selectedSize} />
                 </div>
                 <div className="order-1 md:order-2">
-                  <ProductInfo product={product} onColorChange={setSelectedColor} />
+                  <ProductInfo 
+                    product={product} 
+                    selectedColor={selectedColor} 
+                    onColorChange={setSelectedColor} 
+                    selectedSize={selectedSize} 
+                    onSizeChange={setSelectedSize} 
+                  />
                 </div>
               </div>
 

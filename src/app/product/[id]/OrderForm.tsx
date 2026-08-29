@@ -32,6 +32,13 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
   const totalPriceNum = basePriceNum * quantity;
   const formattedTotalPrice = `${totalPriceNum.toLocaleString()} DA`;
 
+  const originalPriceNum = product.originalPrice
+    ? parseInt(product.originalPrice.replace(/[^\d]/g, ""), 10) || 0
+    : 0;
+  const totalOriginalPriceNum = originalPriceNum * quantity;
+  const formattedTotalOriginalPrice =
+    totalOriginalPriceNum > 0 ? `${totalOriginalPriceNum.toLocaleString()} DA` : null;
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Restrict input to digits only
     const digitsOnly = e.target.value.replace(/\D/g, "");
@@ -279,7 +286,14 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
           {/* Total Price Display */}
           <div className="text-end">
             <span className="text-xs text-gray-500 block">{t("product.total")}</span>
-            <span className="text-lg font-bold text-[var(--brand-wine)]">{formattedTotalPrice}</span>
+            <div className="flex items-center justify-end gap-2">
+              {formattedTotalOriginalPrice && (
+                <span className="text-sm text-gray-400 line-through font-normal">
+                  {formattedTotalOriginalPrice}
+                </span>
+              )}
+              <span className="text-lg font-bold text-[var(--brand-wine)]">{formattedTotalPrice}</span>
+            </div>
           </div>
         </div>
 

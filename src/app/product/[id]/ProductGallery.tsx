@@ -16,9 +16,9 @@ export default function ProductGallery({ product, selectedColor = "White" }: Pro
   const [mainImage, setMainImage] = useState(images[0]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 md:gap-4">
       {/* Main Image */}
-      <div className="relative w-full aspect-[3/4] bg-[#F5F5F5] overflow-hidden group">
+      <div className="relative w-full aspect-square md:aspect-[3/4] bg-[#F5F5F5] overflow-hidden group rounded-xl">
         <img
           src={encodeURI(mainImage)}
           alt={`${product.name} - ${color.name}`}
@@ -36,7 +36,7 @@ export default function ProductGallery({ product, selectedColor = "White" }: Pro
           <button
             key={idx}
             onClick={() => setMainImage(img)}
-            className={`flex-shrink-0 w-20 sm:w-24 aspect-[3/4] flex items-center justify-center transition-all hover:opacity-90 ${
+            className={`flex-shrink-0 w-16 sm:w-20 md:w-24 aspect-[4/5] md:aspect-[3/4] rounded-lg overflow-hidden flex items-center justify-center transition-all hover:opacity-90 ${
               mainImage === img ? "ring-2 ring-[var(--brand-wine)]" : "opacity-80"
             }`}
           >

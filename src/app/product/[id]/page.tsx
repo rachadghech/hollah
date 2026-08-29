@@ -67,10 +67,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               - Mobile  → Gallery first (order-1), then Info + Form below (order-2)
               - Desktop → Form+Info first / left column (md:order-1), Gallery right (md:order-2)
             */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mt-2 md:mt-4">
 
               {/* Desktop LEFT / Mobile SECOND: Info + Form */}
-              <div className="flex flex-col gap-8 pt-4 order-2 md:order-1">
+              <div className="flex flex-col gap-4 md:gap-8 pt-0 md:pt-4 order-2 md:order-1">
                 <div>
                   <ProductInfo 
                     product={product} 

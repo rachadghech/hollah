@@ -78,17 +78,17 @@ export default function ProductInfo({
       </div>
 
       {/* Selectors (order-1 on mobile directly after gallery, order-2 on desktop) */}
-      <div className="order-1 md:order-2 flex flex-col gap-6 md:mt-4 md:border-t border-gray-200 md:pt-6">
+      <div className="order-1 md:order-2 flex flex-col gap-4 md:gap-6 md:mt-4 md:border-t border-gray-200 md:pt-6">
 
         {/* Color */}
         <div>
-          <p className="text-[var(--brand-wine)] font-medium mb-3">{t('product.color')}: {t('color.' + selectedColor)}</p>
+          <p className="text-[var(--brand-wine)] font-medium mb-2 md:mb-3">{t('product.color')}: {t('color.' + selectedColor)}</p>
           <div className="flex gap-4">
             {product.colors.map((color) => (
               <button
                 key={color.name}
                 onClick={() => handleColorSelect(color.name)}
-                className={`w-16 h-20 sm:w-20 sm:h-24 transition-all flex items-center justify-center border-2 ${
+                className={`w-12 h-14 sm:w-16 sm:h-20 md:w-20 md:h-24 transition-all flex items-center justify-center border-2 ${
                   selectedColor === color.name ? "border-[var(--brand-wine)]" : "border-transparent"
                 }`}
                 style={{
@@ -96,7 +96,7 @@ export default function ProductInfo({
                   backgroundSize: "100% 100%",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
-                  padding: "6px"
+                  padding: "4px"
                 }}
                 title={color.name}
               >
@@ -120,13 +120,13 @@ export default function ProductInfo({
 
         {/* Size */}
         <div>
-          <p className="text-[var(--brand-wine)] font-medium mb-3">{t('product.size')}: {selectedSize}</p>
+          <p className="text-[var(--brand-wine)] font-medium mb-2 md:mb-3">{t('product.size')}: {selectedSize}</p>
           <div className="flex gap-3">
             {sizes.map((size) => (
               <button
                 key={size}
                 onClick={() => handleSizeSelect(size)}
-                className={`w-12 h-14 flex items-center justify-center text-lg font-medium transition-all
+                className={`w-10 h-12 md:w-12 md:h-14 flex items-center justify-center text-base md:text-lg font-medium transition-all
                   ${selectedSize === size
                     ? 'text-[var(--brand-wine)]'
                     : 'text-gray-600 hover:text-[var(--brand-wine)]'

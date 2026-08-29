@@ -36,7 +36,7 @@ const threePiecesWhite = [
 const threePiecesBlack = [
   "/products/3 pieces/Black/1-01.webp",
   "/products/3 pieces/Black/1-03.webp",
-  "/products/3 pieces/Black/1-04.webp",
+
   "/products/3 pieces/Black/1-05.webp",
   "/products/3 pieces/Black/1-06.webp",
   "/products/3 pieces/Black/1-07.webp",

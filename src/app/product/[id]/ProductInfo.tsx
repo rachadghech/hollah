@@ -41,8 +41,8 @@ export default function ProductInfo({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Title & Price Section */}
-      <div>
+      {/* Title & Price Section (order-2 on mobile, order-1 on desktop) */}
+      <div className="order-2 md:order-1 pt-6 md:pt-0 border-t md:border-t-0 border-gray-200">
         <p className="text-sm font-semibold tracking-wider text-gray-500 mb-2 uppercase">{t('product.collection')}</p>
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif-brand text-[var(--brand-wine)] leading-tight mb-4">
           {product.name}
@@ -77,8 +77,8 @@ export default function ProductInfo({
         </div>
       </div>
 
-      {/* Selectors */}
-      <div className="flex flex-col gap-6 mt-4 border-t border-gray-200 pt-6">
+      {/* Selectors (order-1 on mobile directly after gallery, order-2 on desktop) */}
+      <div className="order-1 md:order-2 flex flex-col gap-6 md:mt-4 md:border-t border-gray-200 md:pt-6">
 
         {/* Color */}
         <div>

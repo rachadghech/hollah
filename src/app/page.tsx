@@ -95,7 +95,7 @@ export default function Home() {
       )}
 
       {/* Floating Action Button (Loyalty & Support) */}
-      <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
+      <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-9999999">
         <button 
           onClick={() => triggerToast(t("toast.loyalty"))}
           className="cursor-pointer w-12 h-14 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group animate-pulse"

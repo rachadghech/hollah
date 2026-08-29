@@ -11,7 +11,7 @@ export default function FloatingActions({ triggerToast }: FloatingActionsProps) 
   const { t } = useLanguage();
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
+    <div className="fixed bottom-18 right-6 flex flex-col gap-3 z-9999999">
       {/* Loyalty Button */}
       <button 
         onClick={() => triggerToast(t("toast.loyalty"))}

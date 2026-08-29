@@ -106,9 +106,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       {/* ═══════════ FIXED BUY NOW BOTTOM BAR ═══════════ */}
       {product && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-[var(--brand-burgundy)]/20 shadow-[0_-4px_24px_rgba(126,42,76,0.15)] px-4 py-2.5 md:py-3.5">
-          <div className="max-w-xl mx-auto w-full flex items-center justify-center gap-4 sm:gap-6 md:gap-8">
+          <div className="max-w-xl mx-auto w-full flex items-center justify-between gap-4 sm:gap-6 md:gap-8">
             {/* Price summary */}
-            <div className="flex flex-col sm:flex-row items-center sm:gap-2.5 leading-tight shrink-0 text-center sm:text-start">
+            <div className="flex flex-col sm:flex-row items-center sm:gap-2.5 leading-tight shrink-0 text-start">
               <span className="text-base sm:text-lg md:text-xl font-bold text-[var(--brand-wine)]">{product.price}</span>
               {product.originalPrice && (
                 <span className="text-xs sm:text-sm md:text-base text-gray-400 line-through">{product.originalPrice}</span>
@@ -118,7 +118,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             {/* Buy Now button — scrolls to the order form */}
             <button
               onClick={scrollToForm}
-              className="btn-rich-gold flex-1 max-w-[240px] sm:max-w-xs md:max-w-sm flex items-center justify-center font-serif-brand text-base sm:text-lg md:text-xl py-2.5 sm:py-3 px-5 sm:px-6 rounded-xl md:rounded-2xl cursor-pointer font-bold tracking-wide shadow-md"
+              className="btn-rich-gold flex-1 flex items-center justify-center font-serif-brand text-base sm:text-lg md:text-xl py-2.5 sm:py-3 px-5 sm:px-6 rounded-xl md:rounded-2xl cursor-pointer font-bold tracking-wide shadow-md"
             >
               {t('product.buy')}
             </button>
@@ -150,7 +150,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
            </div>
 
            {/* Social Links */}
-           <div className="flex items-center justify-center gap-6 text-sm font-medium border-t border-[var(--brand-burgundy)] pt-6 w-full max-w-2xl">
+           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm font-medium border-t border-[var(--brand-burgundy)] pt-6 w-full max-w-2xl">
               <Link href="#" className="flex items-center gap-2 hover:text-[var(--brand-wine)]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                 /facebookname

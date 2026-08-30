@@ -111,27 +111,24 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
 
       // 1.5 Send to Google Sheets
       try {
-        const orderData = {
+        const orderData = new URLSearchParams({
           orderNumber: orderRefId,
           fullName: fullName.trim(),
           city: commune.trim(),
           address: `${wilaya} - ${commune}`, 
           phone: phone.trim(),
           productTitle: product.name,
-          quantity: quantity,
+          quantity: quantity.toString(),
           totalPrice: formattedTotalPrice,
           shippingPrice: "500 DA", // Standard shipping or update as needed
           variantTitle: `${selectedColor} / ${selectedSize}`,
           provinceFr: wilaya.trim()
-        };
+        });
 
-        await fetch("https://script.google.com/macros/s/AKfycbx-11JIkIw7xlDoOZ_blcG1-ZWpuopHtGJROHsrQOhLRnLLuV0Fr3X07qcnZv74pKZ-/exec", {
+        await fetch("https://script.google.com/macros/s/AKfycbynt5-J_WzfGg_P6s9d2rFso9HtGDg9pH8KwMkj3KRLWw-NCGRu1HqR4rCOGajNrmWH/exec", {
           method: "POST",
           mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(orderData)
+          body: orderData
         });
       } catch (sheetErr) {
         console.warn("Google Sheets sync error:", sheetErr);

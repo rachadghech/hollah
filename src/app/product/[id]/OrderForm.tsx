@@ -109,6 +109,34 @@ export default function OrderForm({ product, selectedColor = "White", selectedSi
         console.warn("Backend order sync notice:", apiErr);
       }
 
+      // 1.5 Send to Google Sheets
+      try {
+        const orderData = {
+          orderNumber: orderRefId,
+          fullName: fullName.trim(),
+          city: commune.trim(),
+          address: `${wilaya} - ${commune}`, 
+          phone: phone.trim(),
+          productTitle: product.name,
+          quantity: quantity,
+          totalPrice: formattedTotalPrice,
+          shippingPrice: "500 DA", // Standard shipping or update as needed
+          variantTitle: `${selectedColor} / ${selectedSize}`,
+          provinceFr: wilaya.trim()
+        };
+
+        await fetch("https://script.google.com/macros/s/AKfycbx-11JIkIw7xlDoOZ_blcG1-ZWpuopHtGJROHsrQOhLRnLLuV0Fr3X07qcnZv74pKZ-/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData)
+        });
+      } catch (sheetErr) {
+        console.warn("Google Sheets sync error:", sheetErr);
+      }
+
       // 2. Save order locally for Thank You page
       if (typeof window !== "undefined") {
         localStorage.setItem("lastOrder", JSON.stringify(orderPayload));
